@@ -256,6 +256,7 @@ endif()
 # linked here, where CMake knows its dependencies (build.sh builds them with ninja).
 if (WIN32)
     enable_language(RC)
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../native" "${CMAKE_BINARY_DIR}/pc-native")
     file(GLOB BB_RUNTIME CONFIGURE_DEPENDS ../src/runtime*.c)
     file(GLOB BB_ATRAC9 CONFIGURE_DEPENDS ../third_party/LibAtrac9/C/src/*.c)
     add_library(atrac9 STATIC ${BB_ATRAC9})
@@ -263,6 +264,7 @@ if (WIN32)
     set_target_properties(atrac9 PROPERTIES C_STANDARD 99 INTERPROCEDURAL_OPTIMIZATION OFF)
     add_executable(bb-probe ../src/probe.c ${BB_RUNTIME} ../src/compat_win.c ../src/vulkan_smoke.c
         ../packaging/windows/bb-probe.rc)
+    add_dependencies(bb-probe bb-native-ui bb-native-assets)
     set_target_properties(bb-probe PROPERTIES C_STANDARD 11 C_EXTENSIONS OFF)
     target_compile_options(bb-probe PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Werror>)
     # Clang 23 added -Wunused-but-set-global (on with -Wall): the runtime keeps a few
@@ -333,3 +335,10 @@ add_executable(fsr4-bench EXCLUDE_FROM_ALL tools/fsr4_bench.cpp
     shadps4/video_core/renderer_vulkan/fsr411/fsr411.cpp)
 target_include_directories(fsr4-bench PRIVATE shadps4/video_core/renderer_vulkan/fsr411)
 target_link_libraries(fsr4-bench PRIVATE ffx-vulkan::fsr4-v07-vulkan ffx-vulkan::fsr4-v07-assets Vulkan::Vulkan)
+
+# Standalone renderer tests have no guest/native module; retain no-op host services.
+if(WIN32)
+    foreach(pc_renderer_test motion-shader-test scene-resolution-test taa-shader-test camera-motion-test)
+        target_sources(${pc_renderer_test} PRIVATE ../native/tests/pc_runtime_stubs.cpp)
+    endforeach()
+endif()

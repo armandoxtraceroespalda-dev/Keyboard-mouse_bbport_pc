@@ -1,0 +1,29 @@
+Base y motor original: Supermedo/bloodborne_pc, version 1.9.1
+https://github.com/Supermedo/bloodborne_pc
+Launcher de referencia: b4dcc823b1c759bdf621704bab449a3dc54e0cad.
+
+Navegacion de listas y ciclo del editor de apariencia: adaptaciones de bbhost
+(droogie/bbhost), trabajos de 7c790536c2c27ad7bb5115e3b1a12d7ffd7a972e y
+menu_pointer db5457cbd447f4ef129b58df0a78e0a8819c7033.
+https://github.com/droogie/bbhost
+Se usaron tambien adaptadores aislados publicados por DarkIzuku
+(v0.4.0-darkizuku-preview.1, 8ecba9a4abdd54747e31d7fee54982e422b5f8e2).
+https://github.com/DarkIzuku/bloodborne_pc
+No se incluye su motor, renderer, launcher, configuracion ni dependencias.
+
+Codigo nuevo/adaptado del modulo nativo: GPL-3.0-or-later.
+Base del launcher y controles anteriores: GPL-2.0-or-later; la integracion con
+componentes GPL3 se distribuye bajo GPL-3.0-or-later.
+Runtime de compilacion LLVM/MinGW: textos de licencia incluidos.
+SDL3 es una dependencia de la instalacion original, no se redistribuye aqui.
+
+1.5: paginas nativas de opciones, bindings, estado del motor, camara y Rebirth
+adaptadas de los mismos proyectos. El conversor bb-native-assets.exe procede
+del tool bb-engine-assets del tag indicado; su fuente completa se incluye.
+Su licencia es GPL-3.0-or-later y usa zlib y libc++ de la instalacion original.
+No se incorporan los shaders ni objetos del renderer del otro proyecto.
+
+1.5.20: conversor de recursos actualizado (serializacion solamente), fuentes
+GPL-3.0 en Kit-Reaplicacion/sources/native-assets; adaptado del conversor de
+referencia ya utilizado por este proyecto. zlib 1.3.1 enlazada estaticamente;
+licencia en zlib.txt y fuentes incluidas en el kit. Renderer original conservado.

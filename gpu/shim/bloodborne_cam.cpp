@@ -1,3 +1,4 @@
+#include "../../src/runtime_pc_ui.h"
 // SPDX-License-Identifier: GPL-2.0-or-later
 // Bloodborne mouse camera by imedved (Nexus Mods), ported to bbport by mcrib884 (#3, bbmouse).
 
@@ -412,6 +413,7 @@ bool BloodborneCam::SetEnabled(bool enabled) {
 }
 
 void BloodborneCam::OnMouseMotion(float xrel, float yrel) {
+    if (!runtime_pc_ui_mouse_motion(&xrel, &yrel)) return;
     if (!m_enabled.load(std::memory_order_acquire) || !m_trampoline) {
         return;
     }

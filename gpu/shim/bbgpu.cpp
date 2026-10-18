@@ -1,3 +1,4 @@
+#include "../../src/runtime_pc_ui.h"
 #include "bbport_write_log.h"
 // bbport: glue between the C loader and the vendored shadPS4 video core.
 #include "bbport_overlay.h"
@@ -372,6 +373,7 @@ extern "C" void bbgpu_mouse_take(BbMouseInput* out) {
     g_window->TakeMouseInput(mouse);
     out->dx = mouse.dx;
     out->dy = mouse.dy;
+    runtime_pc_ui_mouse_motion(&out->dx, &out->dy);
     out->buttons = mouse.buttons;
     out->wheel = mouse.wheel;
     out->captured = mouse.captured ? 1 : 0;

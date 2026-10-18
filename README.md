@@ -161,3 +161,11 @@ artwork.
 
 GNU GPL v2 or later ([LICENSE](LICENSE)). Third-party components keep their own licenses
 (see `licenses\` in the download).
+
+## Native PC controls and menus (source integration)
+
+This tree includes configurable Dark Souls III-style keyboard/mouse controls, native game
+menu navigation and bindings, camera options, appearance/rebirth tweaks and eight-language
+localization while retaining the original engine and renderer. See
+[docs/NATIVE_PC_CONTROLS.md](docs/NATIVE_PC_CONTROLS.md) for features, build instructions,
+source integration points and validation limits.

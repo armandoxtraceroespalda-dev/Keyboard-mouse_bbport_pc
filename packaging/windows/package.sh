@@ -7,7 +7,7 @@
 set -euo pipefail
 cd -- "$(dirname -- "$0")/../.."
 source ./msys2-env.sh
-[[ -f out/bb-probe.exe && -f out/bb-gpu-capabilities.exe && -f out/bb-play.exe ]] || { echo 'Build first: bash build.sh' >&2; exit 1; }
+[[ -f out/bb-probe.exe && -f out/bb-gpu-capabilities.exe && -f out/bb-play.exe && -f out/bb-native-ui.dll && -f out/bb-native-assets.exe ]] || { echo 'Build first: bash build.sh' >&2; exit 1; }
 
 # A Windows Python (not MSYS2's) for PyInstaller.
 python=${WINPYTHON:-}
@@ -43,11 +43,11 @@ cp -r out/pyi-dist/Bloodborne/. "$dest/"
 llvm-strip -o "$dest/Play Bloodborne.exe" out/bb-play.exe
 cp launcher/bloodborne.ico launcher/bloodborne.png "$dest/launcher/"
 # The executables without debug information (out/ keeps the symbols for crash reports).
-for exe in bb-probe.exe bb-gpu-capabilities.exe; do
+for exe in bb-probe.exe bb-gpu-capabilities.exe bb-native-ui.dll bb-native-assets.exe; do
     llvm-strip --strip-debug -o "$dest/bin/$exe" "out/$exe"
 done
 # Every DLL the executables load from the CLANG64 tree (SDL3, FFmpeg, Vulkan loader, ...).
-ldd "$dest/bin/bb-probe.exe" "$dest/bin/bb-gpu-capabilities.exe" |
+ldd "$dest/bin/bb-probe.exe" "$dest/bin/bb-gpu-capabilities.exe" "$dest/bin/bb-native-ui.dll" "$dest/bin/bb-native-assets.exe" |
     awk '/\/clang64\/bin\// {print $3}' | sort -u | while read -r dll; do
         cp -u "$dll" "$dest/bin/"
     done
@@ -71,6 +71,7 @@ mkdir -p "$dest/licenses"
 cp gpu/third_party/wepoll/LICENSE "$dest/licenses/wepoll-LICENSE.txt"
 cp gpu/third_party/httplib/LICENSE "$dest/licenses/cpp-httplib-LICENSE.txt"
 cp packaging/windows/licenses/*.txt "$dest/licenses/"
+cp native/licenses/* "$dest/licenses/"
 # Where the online code comes from (shadPS4 0.20, Awaken's port, bbhost's protocol).
 cp gpu/bbnet/SHADNET-PORT.md "$dest/licenses/online-code-NOTICE.md"
 for package in protobuf abseil-cpp openssl miniupnpc zlib; do

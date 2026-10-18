@@ -1,0 +1,4 @@
+Native PC UI/input integration: original engine and renderer preserved.
+UI/asset adaptation includes GPL-3.0-or-later code from bbhost and bloodborne_pc.
+See native/README.md for provenance.
+Launcher integration uses GPL-2.0-or-later and GPL-3.0-or-later modules as marked.

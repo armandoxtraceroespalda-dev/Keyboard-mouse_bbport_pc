@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include <cpuid.h>
 #include "runtime.h"
+#include "runtime_pc_ui.h"
 #include "gpu/bbgpu.h"
 #if !defined(__x86_64__) || !defined(__GNUC__)
 #error This prototype requires x86-64 GCC or Clang (including MinGW).
@@ -488,6 +489,7 @@ int main(int argc, char **argv) {
         sfo_value(sfo,"APP_VER",version,sizeof(version),NULL);
         bbnet_configure(app0,serial,title,version);
     }
+    if (!runtime_pc_ui_init()) fail("native PC UI module initialization failed");
     bbgpu_register_kernel();
 #ifdef _WIN32
     SYSTEM_INFO system_info; GetSystemInfo(&system_info); page_size = system_info.dwPageSize;
@@ -663,6 +665,7 @@ int main(int argc, char **argv) {
 #ifdef _WIN32
     printf("Guest TCB loads redirected to the TEB TLS slot: %" PRIu64 "\n", patch_tcb_loads(segments, ns));
 #endif
+    runtime_pc_ui_image_ready(image, (size_t)size);
     protect(traps, round_page((import_count + 1) * 32), 5);
     protect(image, round_page(size), 0);
     int executable_entry = 0;

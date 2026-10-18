@@ -1,3 +1,4 @@
+#include "../../src/runtime_pc_ui.h"
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include "bbport_overlay.h"
 
@@ -70,7 +71,7 @@ void SetOpen(bool value) {
     ImGui::GetIO().MouseDrawCursor = value;
     if (!value && dirty) {
         dirty = false;
-        BbSettings::Save();
+        runtime_pc_ui_render_save(&BbSettings::Save);
     }
 }
 
@@ -436,7 +437,7 @@ void Menu() {
         ImGui::TextColored(ImVec4(1.0f, 0.75f, 0.3f, 1.0f),
                            "Changes will apply after restarting the game");
         if (ImGui::Button("Apply and restart")) {
-            BbSettings::Save();
+            runtime_pc_ui_render_save(&BbSettings::Save);
             runtime_restart();
         }
     }

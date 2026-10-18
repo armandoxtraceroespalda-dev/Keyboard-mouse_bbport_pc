@@ -1,3 +1,4 @@
+#include "../../src/runtime_pc_ui.h"
 // bbport: SDL3 window for the Vulkan swapchain (X11 or Wayland).
 #include <cstdlib>
 #include <cstring>
@@ -109,6 +110,7 @@ bool WindowSDL::PollEvents() {
     }
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+        runtime_pc_ui_event(&event);
         // HOT-003: the toggle/reload hotkeys work regardless of the menu or text dialog (F8
         // must reload input.ini even with the menu open), so they are handled before anything
         // else gets a chance to consume the key event. Held-down repeats are ignored the same
@@ -235,11 +237,14 @@ void WindowSDL::UpdateMouseCamera() {
 bool WindowSDL::WantsMouseCapture() const {
     // MOU-003: all of mouse mode on, window focused, menu closed, text dialog inactive.
     // BbOverlay::CapturesInput() already covers both the menu and the text entry box.
-    return mouse_mode_on.load(std::memory_order_relaxed) && window_focused && !BbOverlay::CapturesInput();
+    return mouse_mode_on.load(std::memory_order_relaxed) && window_focused && !BbOverlay::CapturesInput() && runtime_pc_ui_capture_allowed();
 }
 
 void WindowSDL::UpdateMouseCapture() {
+    mouse_mode_on.store(runtime_pc_ui_window_mode(mouse_mode_on.load(std::memory_order_relaxed)), std::memory_order_relaxed);
+    if (runtime_pc_ui_take_reload()) reload_requested.store(true, std::memory_order_relaxed);
     const bool wants = WantsMouseCapture();
+    runtime_pc_ui_capture_note(wants);
     if (wants == mouse_captured_last) {
         return;
     }

@@ -28,6 +28,7 @@ MINGW*|MSYS*)
         echo 'Build failed (full log: out/gpu-build.log)' >&2; exit 1
     fi
     cp out/gpu/bb-probe.exe out/gpu/bb-gpu-capabilities.exe out/gpu/bb-play.exe out/
+    cp out/gpu/bb-native-ui.dll out/gpu/bb-native-assets.exe out/
     echo "Built $PWD/out/bb-probe.exe"
     exit 0
     ;;

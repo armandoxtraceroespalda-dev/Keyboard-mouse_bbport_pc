@@ -13,6 +13,7 @@
  *   IJKL d-pad (I up, K down, J left, L right). */
 #define _GNU_SOURCE
 #include "runtime.h"
+#include "runtime_pc_ui.h"
 #include "gpu/bbgpu.h"
 #include "runtime_input_config.h"
 #include <stdio.h>
@@ -408,9 +409,11 @@ static void ensure_config_loaded(void) {
     if (config_initialized) return;
     config_initialized=1;
     input_config_defaults(&default_config);
+    runtime_pc_ui_filter_config(&default_config);
     char path[1024];
     InputConfig *fresh=malloc(sizeof(*fresh));
     if (fresh && input_config_path(path,sizeof(path)) && input_config_load(fresh,path)) {
+        runtime_pc_ui_filter_config(fresh);
         loaded_config=fresh;
         if (fresh->warnings) printf("Input config: %s loaded, %u line(s) ignored (see above)\n",path,fresh->warnings);
         else printf("Input config: %s loaded\n",path);
@@ -436,6 +439,7 @@ static void reload_config_if_requested(void) {
     if (!fresh) return;
     if (input_config_path(path,sizeof(path)) && input_config_load(fresh,path)) {
         InputConfig *old=loaded_config;
+        runtime_pc_ui_filter_config(fresh);
         loaded_config=fresh;
         free(old);
         if (fresh->warnings) printf("Input config: %s reloaded, %u line(s) ignored (see above)\n",path,fresh->warnings);
@@ -740,7 +744,9 @@ static ABI int32_t pad_read_state(int32_t handle, PadData *data) {
     if (handle!=PAD_HANDLE || !opened) return ERR_INVALID_HANDLE;
     if (!data) return ERR_INVALID_ARG;
     pthread_mutex_lock(&lock);
-    sample(data); ++reads;
+    sample(data);
+    runtime_pc_ui_pad_update(data);
+    ++reads;
     pthread_mutex_unlock(&lock);
     return 0;
 }

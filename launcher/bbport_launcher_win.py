@@ -2391,5 +2391,9 @@ def main():
     root.mainloop()
 
 
+# Source integration: ordinary imports, retained in PyInstaller builds.
+from bbport_integrated_ui import install as _install_pc_controls
+_install_pc_controls(globals())
+
 if __name__ == '__main__':
     main()
