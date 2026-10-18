@@ -3,6 +3,20 @@
 
 **Bloodborne running natively on Windows 10 and 11, by [Supermedo](https://github.com/Supermedo) Mohammed Albarghouthi.**
 
+- Keyboard and mouse prompts: replaces PS4 button labels with the assigned keyboard and mouse bindings in menus and gameplay interaction prompts.
+- Dark Souls III PC controls: provides a default keyboard and mouse profile with configurable attacks, interaction, item use, movement, and camera controls.
+- Key combinations: supports bindings such as Shift + Left Click in both the launcher and the in-game binding menu.
+- Mouse menu navigation: supports pointing and clicking, left-click to select, and right-click to go back. Players can move while navigating the inventory.
+- Bidirectional item switching: scroll the mouse wheel to select the next or previous quick item.
+- In-game input selection: switch between Controller and Keyboard and mouse, retaining both configurations and updating the displayed prompts.
+- Integrated control settings: adds categorized key bindings and default-profile restoration to the vanilla Controls menu. Vanilla camera inversion, sensitivity, and auto-adjust settings apply to both mouse and controller.
+- Camera customization: adds field of view, distance, and height settings under Environment → Camera options.
+- Gameplay tweaks: enables appearance editing through the Hunter’s Dream mirror and level/attribute resets at the Altar of Despair using the Yharnam Stone.
+- Launcher integration: adds GPU selection, input profiles, configurable key combinations, and gameplay tweak options.
+
+
+
+
 The original PlayStation 4 game runs directly on your PC: its own x86-64 code runs natively,
 and the graphics are translated to Vulkan. No emulator window, no setup scripts: unpack the zip,
 start `Bloodborne.exe`, pick your game folder and press **PLAY**.
