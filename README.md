@@ -3,6 +3,8 @@
 
 **Bloodborne running natively on Windows 10 and 11, by [Supermedo](https://github.com/Supermedo) Mohammed Albarghouthi.**
 
+THIS FORK IMPLEMENTS THE FOLLOWING:
+
 - Keyboard and mouse prompts: replaces PS4 button labels with the assigned keyboard and mouse bindings in menus and gameplay interaction prompts.
 - Dark Souls III PC controls: provides a default keyboard and mouse profile with configurable attacks, interaction, item use, movement, and camera controls.
 - Key combinations: supports bindings such as Shift + Left Click in both the launcher and the in-game binding menu.
