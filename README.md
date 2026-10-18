@@ -3,6 +3,8 @@
 
 **Bloodborne running natively on Windows 10 and 11, by [Supermedo](https://github.com/Supermedo) Mohammed Albarghouthi.**
 
+<img width="2557" height="1440" alt="image" src="https://github.com/user-attachments/assets/96988772-4ae2-4d11-8609-f9c40eaa18c9" />
+
 
 THIS FORK IMPLEMENTS THE FOLLOWING:
 
